@@ -56,7 +56,8 @@ If you'd like, I can add an "Advanced Setup" section later for connecting two cl
 )     | A regular turn – a piece was selected and moved.         |
 | ![Capture](![image](https://github.com/user-attachments/assets/013d124d-98b4-43ab-bd15-368692fdf624)
 ) | Capture move – a piece jumps over and eats opponent.     |
-| ![End](screenshots/end.png)       | Game over – a winner is declared (or no more moves).     |
+| ![End](![image](https://github.com/user-attachments/assets/2c63c379-5d0e-43c9-b6fa-7a78e5a61af6)
+)       | Game over – a winner is declared (or no more moves).     |
 
 
 
