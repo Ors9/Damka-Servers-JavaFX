@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DamkaGameController">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="NEVER">
+         <children>
+            <Label fx:id="lblPlayer" prefHeight="68.0" prefWidth="456.0" text="Player">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTurn" prefHeight="68.0" prefWidth="444.0" text="Player">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <StackPane prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+         <children>
+            <ImageView fitHeight="332.0" fitWidth="611.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/DamkaBoard.jpeg" />
+               </image>
+            </ImageView>
+            <GridPane fx:id="grid" alignment="CENTER" gridLinesVisible="true">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="89.5" minWidth="10.0" prefWidth="75.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="91.5" minWidth="10.0" prefWidth="71.5" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="82.0" minWidth="10.0" prefWidth="70.5" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.5" minWidth="0.0" prefWidth="69.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.5" minWidth="10.0" prefWidth="71.5" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="10.0" prefWidth="70.5" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="127.0" minWidth="10.0" prefWidth="69.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.5" minWidth="10.0" prefWidth="74.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="42.5" minHeight="10.0" prefHeight="39.5" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="41.5" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="72.5" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="69.5" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="66.0" minHeight="10.0" prefHeight="39.5" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="38.5" minHeight="10.0" prefHeight="38.5" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="38.5" minHeight="10.0" prefHeight="38.5" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="44.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <StackPane.margin>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+               </StackPane.margin>
+            </GridPane>
+         </children>
+      </StackPane>
+   </children>
+</VBox>
