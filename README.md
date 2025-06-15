@@ -50,9 +50,8 @@ If you'd like, I can add an "Advanced Setup" section later for connecting two cl
 
 | State        | Description                                               |
 |--------------|-----------------------------------------------------------|
-| ![Start](https://github.com/user-attachments/assets/6020db96-89ac-4007-b65f-e0c58e423dca)   | Game start – both players connected, board initialized. |
+| ![Start](https://github.com/user-attachments/assets/6020db96-89ac-4007-b65f-e0c58e423dca)   | Game start – both players connected, board initialized after a move. |
 | ![Step](https://github.com/user-attachments/assets/0d917b2c-2d03-469e-83ff-baffecc0e5e6)    | A regular turn – a piece was selected and moved.         |
-| ![Capture](https://github.com/user-attachments/assets/013d124d-98b4-43ab-bd15-368692fdf624) | Capture move – a piece jumps over and eats opponent.     |
 | ![End](https://github.com/user-attachments/assets/2c63c379-5d0e-43c9-b6fa-7a78e5a61af6)     | Game over – a winner is declared (or no more moves).     |
 | ![King](https://github.com/user-attachments/assets/ca176e59-c07a-4181-95c6-6006cbab65c2)    | Making King – piece reaches the last row and becomes king |
 | ![DoubleCaptureKing](https://github.com/user-attachments/assets/db36e5bb-ba67-4ae7-ad57-cc5f56fc75a7) | Double capture with king – king piece performs two jumps |
