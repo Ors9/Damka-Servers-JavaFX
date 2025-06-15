@@ -5,7 +5,7 @@ public class BoardStateClients implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public enum CellState {
-		PLAYER1, PLAYER2, EMPTY
+		PLAYER1, PLAYER2, KING1 , KING2 , EMPTY
 	}
 
 	private CellState[][] gridBoard;
@@ -136,6 +136,12 @@ public class BoardStateClients implements Serializable {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				switch (gridBoard[i][j]) {
+				case KING1:
+					System.out.println("10");
+					break;
+				case KING2:
+					System.out.println("20");
+					break;
 				case PLAYER1:
 					System.out.print("1 ");
 					break;
@@ -167,14 +173,22 @@ public class BoardStateClients implements Serializable {
 		CellState fromCell = gridBoard[fromRow][fromCol];
 		CellState toCell = gridBoard[toRow][toCol];
 
-		// חייב להיות תור של השחקן הזה
-		if (fromCell != currentPlayerTurn)
-			return false;
+		boolean isPlayer1Piece = (fromCell == CellState.PLAYER1 || fromCell == CellState.KING1);
+		boolean isPlayer2Piece = (fromCell == CellState.PLAYER2 || fromCell == CellState.KING2);
+
+		if ((currentPlayerTurn == CellState.PLAYER1 && !isPlayer1Piece) ||
+		    (currentPlayerTurn == CellState.PLAYER2 && !isPlayer2Piece)) {
+		    return false;
+		}
 
 		// התא שאליו זזים חייב להיות ריק
 		if (toCell != CellState.EMPTY)
 			return false;
 
+		if(gridBoard[fromRow][fromCol] == CellState.KING1 || gridBoard[fromRow][fromCol] == CellState.KING2 ) {
+			return kingMove(fromRow , fromCol , toRow , toCol);
+		}
+		
 		int rowDiff = toRow - fromRow;
 		int colDiff = Math.abs(toCol - fromCol);
 
@@ -195,8 +209,8 @@ public class BoardStateClients implements Serializable {
 			CellState midCell = gridBoard[midRow][midCol];
 
 			// האם באמצע יש יריב?
-			if ((currentPlayerTurn == CellState.PLAYER1 && midCell == CellState.PLAYER2)
-					|| (currentPlayerTurn == CellState.PLAYER2 && midCell == CellState.PLAYER1)) {
+			if ((currentPlayerTurn == CellState.PLAYER1 && (midCell == CellState.PLAYER2 || midCell == CellState.KING2))
+					|| (currentPlayerTurn == CellState.PLAYER2 && (midCell == CellState.PLAYER1 || midCell == CellState.KING1))) {
 
 				// בצע אכילה
 				gridBoard[toRow][toCol] = fromCell;
@@ -208,6 +222,91 @@ public class BoardStateClients implements Serializable {
 
 		return false;
 
+	}
+	
+	private boolean kingMove(int fromRow , int fromCol , int toRow , int toCol) {
+		int diffRow = Math.abs(toRow-fromRow);
+		int diffCol = Math.abs(toCol-fromCol);
+		CellState fromCell = gridBoard[fromRow][fromCol];
+		CellState toCell = gridBoard[toRow][toCol];
+		
+	    if (toCell != CellState.EMPTY)
+	        return false;
+		
+		if(diffRow == 1 && diffCol == 1) {
+			// ביצוע המהלך
+			gridBoard[toRow][toCol] = fromCell;
+			gridBoard[fromRow][fromCol] = CellState.EMPTY;
+			return true;
+		}
+		
+		if(diffRow == 2 && diffCol == 2) {
+			int midRow = fromRow + (toRow - fromRow) / 2;
+			int midCol = fromCol + (toCol - fromCol) / 2;
+			CellState midCell = gridBoard[midRow][midCol];
+			
+			// האם באמצע יש יריב?
+			if ((currentPlayerTurn == CellState.PLAYER1 && (midCell == CellState.PLAYER2 || midCell == CellState.KING2))
+					|| (currentPlayerTurn == CellState.PLAYER2 && (midCell == CellState.PLAYER1 || midCell == CellState.KING1))) {
+
+				// בצע אכילה
+				gridBoard[toRow][toCol] = fromCell;
+				gridBoard[fromRow][fromCol] = CellState.EMPTY;
+				gridBoard[midRow][midCol] = CellState.EMPTY; // הסר את היריב
+				return true;
+			}
+		}
+		
+		
+		
+		return false;
+	}
+
+	public void checkIfBecomeKingAndMakeItKing() {
+	    for (int i = 0; i < 8; i++) {
+	        if (gridBoard[0][i] == CellState.PLAYER2)
+	            gridBoard[0][i] = CellState.KING2;
+
+	        if (gridBoard[7][i] == CellState.PLAYER1)
+	            gridBoard[7][i] = CellState.KING1;
+	    }
+	}
+	
+	public boolean hasAnotherEat(int row, int col) {
+	    CellState piece = gridBoard[row][col];
+
+	    if (piece != CellState.KING1 && piece != CellState.KING2)
+	        return false; // הפונקציה נועדה רק למלכים
+
+	    int[] dr = {-2, -2, 2, 2}; // שינויים בשורה (קפיצה של 2)
+	    int[] dc = {-2, 2, -2, 2}; // שינויים בעמודה
+
+	    for (int i = 0; i < 4; i++) {
+	        int newRow = row + dr[i];
+	        int newCol = col + dc[i];
+	        int midRow = row + dr[i] / 2;
+	        int midCol = col + dc[i] / 2;
+
+	        if (!inBounds(newRow, newCol) || !inBounds(midRow, midCol))
+	            continue;
+
+	        if (gridBoard[newRow][newCol] != CellState.EMPTY)
+	            continue;
+
+	        CellState midCell = gridBoard[midRow][midCol];
+
+	        if (piece == CellState.KING1 &&
+	            (midCell == CellState.PLAYER2 || midCell == CellState.KING2)) {
+	            return true;
+	        }
+
+	        if (piece == CellState.KING2 &&
+	            (midCell == CellState.PLAYER1 || midCell == CellState.KING1)) {
+	            return true;
+	        }
+	    }
+
+	    return false;
 	}
 
 }

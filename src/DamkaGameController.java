@@ -48,8 +48,7 @@ public class DamkaGameController {
 		lblTurn.setStyle("-fx-font-size: 18px;" + "-fx-font-style: italic;" + "-fx-text-fill: #4CAF50;"
 				+ "-fx-background-color: rgba(255,255,255,0.3);" + "-fx-padding: 4px 8px;"
 				+ "-fx-background-radius: 10px;");
-		
-		
+
 		new Thread(() -> {
 			connectToServer(); // תהליך שעלול להיתקע, רץ ברקע
 		}).start();
@@ -109,8 +108,8 @@ public class DamkaGameController {
 				ImageView img = new ImageView();
 
 				// קבע גודל אחיד לתמונה כדי שתהיה בגודל משבצת
-				img.setFitWidth(50); // אפשר לשנות ל־grid.getWidth()/8 אם רוצים דינמי
-				img.setFitHeight(50);
+				img.setFitWidth(40); // אפשר לשנות ל־grid.getWidth()/8 אם רוצים דינמי
+				img.setFitHeight(40);
 				img.setPreserveRatio(true); // כדי לשמור על פרופורציות
 				img.setPickOnBounds(true);
 
@@ -119,6 +118,10 @@ public class DamkaGameController {
 					img.setImage(new Image(getClass().getResourceAsStream("/images/solider1.png")));
 				} else if (player == BoardStateClients.CellState.PLAYER2) {
 					img.setImage(new Image(getClass().getResourceAsStream("/images/solider2.png")));
+				} else if (player == BoardStateClients.CellState.KING1) {
+					img.setImage(new Image(getClass().getResourceAsStream("/images/king1.png")));
+				} else if (player == BoardStateClients.CellState.KING2) {
+					img.setImage(new Image(getClass().getResourceAsStream("/images/king2.png")));
 				} else {
 					img.setImage(new Image(getClass().getResourceAsStream("/images/empty.png")));
 
@@ -143,9 +146,14 @@ public class DamkaGameController {
 	}
 
 	private void handleButtonPressed(int row, int col) {
+		BoardStateClients.CellState cell = boardGame.getBoardCell(row, col);
 		if (selectedCell == null) {
 			// בחירה ראשונה – רק אם זה החייל שלך
-			if (boardGame.getBoardCell(row, col) == player) {
+			if ((player == BoardStateClients.CellState.PLAYER1
+					&& (cell == BoardStateClients.CellState.PLAYER1 || cell == BoardStateClients.CellState.KING1))
+					|| (player == BoardStateClients.CellState.PLAYER2 && (cell == BoardStateClients.CellState.PLAYER2
+							|| cell == BoardStateClients.CellState.KING2))) {
+
 				selectedCell = new int[] { row, col };
 
 				// הסר סימון קודם אם יש

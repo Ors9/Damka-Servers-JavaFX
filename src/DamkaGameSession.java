@@ -76,11 +76,20 @@ public class DamkaGameSession extends Thread {
 				}
 
 				boolean validMove = boardGame.TryMoveOrEat(move);
-
-				if (validMove) {
-					boardGame.switchTurn();
-				}
 				
+				boardGame.checkIfBecomeKingAndMakeItKing();
+				if (validMove) {
+					BoardStateClients.CellState newCell = boardGame.getBoardCell(move[2], move[3]);
+
+					if (newCell == BoardStateClients.CellState.KING1 || newCell == BoardStateClients.CellState.KING2) {
+						// רק אם אין עוד אכילה – נעביר תור
+						if (!boardGame.hasAnotherEat(move[2], move[3])) {
+							boardGame.switchTurn();
+						}
+					} else {
+						boardGame.switchTurn();
+					}
+				}
 
 				boardGame.printBoard();
 
